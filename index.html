@@ -1,39 +1,29 @@
 ---
 layout: default
 title: Chris Brough
-category: home
 ---
 
-<div id="home">
-     <ul>
-        {% for post in paginator.posts %}
-            <li>
-                <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-                <div class="post">
-                    {{ post.excerpt }}
-                    <p><span class="date">{{ post.date | date: "%b %d, %Y" }} |
-                        {{ post.category }}</span></i>
-                    <a class="readmore right" href="{{ post.url }}">read
-                        more &raquo;</a></p>
-                </div>
-                <hr />
-            </li>
-        {% endfor %}
-    </ul>
-    <div id="newer" class="pager right">
-        {% if paginator.previous_page %}
-            {% if paginator.previous_page == 1 %}
-                <a href="/" title="newer" class="right">newer &raquo;</a>
-            {% else %}
-                <a href="/page{{ paginator.previous_page }}"
-                    title="newer" class="right">newer &raquo;</a>
+<div id="archive">
+    <ul>
+    {% for post in site.posts %}
+        {% unless post.next %}
+            <h2>{{ post.date | date: '%Y' }}</h2>
+        {% else %}
+            {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
+            {% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
+            {% if year != nyear %}
+                <h2 class="year">{{ post.date | date: '%Y' }}</h2>
             {% endif %}
-        {% endif %}
-    </div>
-    <div id="older" class="pager left">
-        {% if paginator.next_page %}
-            <a href="/page{{ paginator.next_page }}"
-                title="older" class="left">&laquo; older</a>
-        {% endif %}
-    </div>
+        {% endunless %}
+        <li>
+            <div class="wrap group">
+                <div class="link"><a href="{{ post.url }}">{{ post.title }}</a></div>
+                <div class="info">
+                    /{{ post.category }}/ -
+                    {{ post.date | date: "%b %d" }}
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
 </div>

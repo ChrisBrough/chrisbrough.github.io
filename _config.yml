@@ -1,5 +1,4 @@
-auto: true
-pygments: true
+highlighter: true
 permalink: /:categories/:year/:month/:title
 markdown: rdiscount
 pagination: true;
